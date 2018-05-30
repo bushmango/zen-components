@@ -10,4 +10,5 @@ export interface IGridHeader {
   tooltip?: string
   editor?: 'check'
   tag?: any
+  renderer?: (row, column, item) => any,
 }

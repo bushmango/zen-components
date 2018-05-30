@@ -12,7 +12,7 @@ export class GridCell extends React.Component<
     isHighlighted: boolean
   },
   {}
-> {
+  > {
   onClick = (ev) => {
     this.props.onClickCell(ev, this.props.column, this.props.dataRow)
   }
@@ -23,7 +23,8 @@ export class GridCell extends React.Component<
     let header = column.header
     let item: any = ''
     if (header.dataItem) {
-      item = dataRow[header.dataItem] || ''
+      item = dataRow[header.dataItem]
+      if (item == null) { item = '' }
     }
     if (header.editor === 'check') {
       let isChecked = item === true || item === 'true'
@@ -48,6 +49,17 @@ export class GridCell extends React.Component<
       } else {
         item = '-'
       }
+    }
+
+    if (header.renderer) {
+      // onMouseDown={this.onClick}
+      return (<div
+        style={isHighlighted ? gridStyle.cellHighlighted : gridStyle.cell}
+        title={'' + item}
+      >
+        <div style={column.cellStyle}>{header.renderer(dataRow, column, item)}</div>
+      </div>
+      )
     }
 
     return (

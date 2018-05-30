@@ -2,7 +2,7 @@ import { React, _ } from './gridImports'
 import { IGridColumn } from './IGridColumn'
 import { IGridStyle } from './IGridStyle'
 
-// import Checkbox from '@material-ui/core/Checkbox'
+import Checkbox from 'material-ui/Checkbox'
 
 export class GridCellCheck extends React.Component<
   {
@@ -30,11 +30,11 @@ export class GridCellCheck extends React.Component<
       <div style={gridStyle.cellCheck}>
         <div style={column.cellStyle}>
           <div style={{ margin: '-10px -5px' }}>
-            {/* <Checkbox
+            <Checkbox
               checked={isSelected}
               onChange={this._onChange}
               color="primary"
-            /> */}
+            />
           </div>
         </div>
       </div>

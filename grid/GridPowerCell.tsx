@@ -8,7 +8,7 @@ import Delete from 'material-ui-icons/Delete'
 import Add from 'material-ui-icons/Add'
 import ContentCopy from 'material-ui-icons/ContentCopy'
 import Edit from 'material-ui-icons/Edit'
-// import IconButton from '@material-ui/core/IconButton' 
+import IconButton from 'material-ui/IconButton'
 
 import Check from 'material-ui-icons/Check'
 import CheckCircle from 'material-ui-icons/CheckCircle'
@@ -20,15 +20,14 @@ export class GridPowerIcon extends React.Component<
   {}
   > {
   render() {
-    // return (
-    //   <IconButton
-    //     style={{ margin: '-18px -10px 0px -10px' }}
-    //     onClick={this.props.onClick}
-    //   >
-    //     {this.props.children}
-    //   </IconButton>
-    // )
-    return null
+    return (
+      <IconButton
+        style={{ margin: '-18px -10px 0px -10px' }}
+        onClick={this.props.onClick}
+      >
+        {this.props.children}
+      </IconButton>
+    )
   }
 }
 
