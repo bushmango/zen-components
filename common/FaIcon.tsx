@@ -5,7 +5,7 @@ const FaIcon = (props: { icon: string; size?: string; prefix?: string }) => {
   if (props.size) {
     className += ' fa-' + props.size
   }
-  return <i className={className} />
+  return <span><i className={className} /></span>
 }
 
 export { FaIcon }
