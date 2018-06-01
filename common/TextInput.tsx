@@ -4,14 +4,11 @@ import * as _ from 'lodash'
 let isVerbose = false
 let aggressivelySuppressTextFlash = true
 
-export class TextInput extends React.Component<
-  {
-    text: string
-    tag?: any
-    onUpdate: (newValue: any, tag: any) => void
-  },
-  {}
-> {
+export class TextInput extends React.Component<{
+  text: string
+  tag?: any
+  onUpdate: (newValue: any, tag: any) => void,
+}> {
   state = {
     isEditing: false,
     editValue: '',
@@ -38,19 +35,61 @@ export class TextInput extends React.Component<
     })
   }
 
-  _tryCommitChange = () => {
-    // Stop editing and commit change
-    let newValue = this.state.editValue
-    if (newValue && this.state.isEditing) {
-      // console.log('commit edit')
-      if (newValue !== this.props.text) {
-        this.props.onUpdate(newValue, this.props.tag)
-        this.setState({ isEditing: false })
-      }
+  componentWillReceiveProps(newProps) {
+    if (aggressivelySuppressTextFlash) {
+      //let showEdit = this.getShowEdit()
+      //if (showEdit) {
+      console.log(
+        'new props',
+        this.props.text,
+        this.state.editStartValue,
+        this.props.text === this.state.editStartValue,
+      )
+      setTimeout(() => {
+        console.log('1')
+        this.setState((prevState: any) => {
+          if (!prevState.isEditing) {
+            console.log('2')
+            return {
+              editValue: this.props.text || '',
+              editStartValue: this.props.text || '',
+            }
+          }
+          return {}
+        })
+      }, 100)
+      //}
     }
   }
 
-  onChange = event => {
+  _tryCommitChange = () => {
+    // Stop editing and commit change
+    let newValue = this.state.editValue || ''
+    if (this.state.isEditing) {
+      // console.log('commit edit')
+      if (newValue !== this.props.text) {
+        this.props.onUpdate(newValue, this.props.tag)
+        // this.setState({ isEditing: false }, () => {
+        //   if (aggressivelySuppressTextFlash) {
+        //     setTimeout(() => {
+        //       this.setState((prevState: any) => {
+        //         if (!prevState.isEditing) {
+        //           return {
+        //             editValue: this.props.text || '',
+        //             editStartValue: this.props.text || '',
+        //           }
+        //         }
+        //         return {}
+        //       })
+        //     }, 100)
+        //   }
+        // })
+      }
+      this.setState({ isEditing: false })
+    }
+  }
+
+  onChange = (event) => {
     let newValue = event.target.value
     if (isVerbose) {
       console.log('change to ', newValue)
@@ -58,21 +97,29 @@ export class TextInput extends React.Component<
     this.setState({ editValue: newValue })
   }
 
-  render() {
-    let showEdit =
+  getShowEdit() {
+    return (
       this.state.isEditing ||
       (aggressivelySuppressTextFlash &&
-        this.state.editStartValue === this.props.text)
+        this.state.editStartValue === this.props.text && this.state.editStartValue !== this.state.editValue)
+    )
+  }
+
+  render() {
+    let showEdit = this.getShowEdit()
 
     return (
-      <input
-        type="text"
-        onFocus={this.onFocus}
-        onBlur={this.onBlur}
-        onChange={this.onChange}
-        style={{}}
-        value={showEdit ? this.state.editValue || '' : this.props.text || ''}
-      />
+      <span>
+        <input
+          type='text'
+          onFocus={this.onFocus}
+          onBlur={this.onBlur}
+          onChange={this.onChange}
+          style={{}}
+          value={showEdit ? this.state.editValue || '' : this.props.text || ''}
+        />
+        {/* <span>{this.state.isEditing ? 'E' : showEdit ? 'e' : '-'}</span> */}
+      </span>
     )
   }
 }

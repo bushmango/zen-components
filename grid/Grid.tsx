@@ -18,16 +18,16 @@ import * as gridLayout from './gridLayout'
 export class Grid extends React.Component<
   {
     gridStyle?: IGridStyle
-    headers: IGridHeader[]    
+    headers: IGridHeader[]
     data: any[]
     newItem?: any
-    onUpdateCell: (newValue: any, column: IGridColumn, dataRow: any) => void
+    onUpdateCell?: (newValue: any, column: IGridColumn, dataRow: any) => void
     selectedRows?: any[]
     onSelectRow?: (dataRow: any, isSelected: boolean, mode: 'single' | 'multiple') => void
     onDeleteRow?: (dataRow: any) => void
     onEditRow?: (dataRow: any) => void
     onCloneRow?: (dataRow: any) => void
-    onAddRow?: (dataRow: any) => void
+    onAddRow?: (dataRow: any) => void,
   },
   {}
 > {
@@ -44,12 +44,12 @@ export class Grid extends React.Component<
   }
 
   _ref_container: HTMLElement = null
-  _set_ref_container = r => {
+  _set_ref_container = (r) => {
     this._ref_container = r
   }
 
   _ref_headers: HTMLElement = null
-  _set_ref_headers = r => {
+  _set_ref_headers = (r) => {
     this._ref_headers = r
   }
 
@@ -63,13 +63,12 @@ export class Grid extends React.Component<
     this.setState({ columns })
   }
 
-  onClickCell = (ev, column, dataRow) => {    
+  onClickCell = (ev, column, dataRow) => {
     this.setState({
       editColumn: column,
       editDataRow: dataRow,
     })
-    if(this.props.onSelectRow)
-    {
+    if (this.props.onSelectRow){
       // console.log(ev)
       // console.log('shift?', ev.shiftKey)
       // console.log('ctrl?', ev.ctrlKey )
@@ -80,7 +79,7 @@ export class Grid extends React.Component<
     }
   }
 
-  updateMouse = event => {
+  updateMouse = (event) => {
     let newHighlightedDataRow = null
     let newHighlightedColumn = null
 
@@ -97,7 +96,7 @@ export class Grid extends React.Component<
       let columnHeight = defaultColumnHeight + 1
       // console.log(this._ref_headers.clientHeight, this._ref_headers.offsetHeight)
       let selectedRow = Math.floor(
-        (y - this._ref_headers.clientHeight - 2) / columnHeight
+        (y - this._ref_headers.clientHeight - 2) / columnHeight,
       )
       let { data } = this.props
       if (data && data.length > selectedRow && selectedRow >= 0) {
@@ -106,7 +105,7 @@ export class Grid extends React.Component<
 
       // Find the highlighted column
       let xAccum = 0
-      _.forEach(columns, c => {
+      _.forEach(columns, (c) => {
         // console.log(x, xAccum, xAccum + c.width)
         if (x >= xAccum && x <= xAccum + c.width) {
           newHighlightedColumn = c
@@ -140,7 +139,7 @@ export class Grid extends React.Component<
 
     // calculate width
     let w = 0
-    _.forEach(columns, c => {
+    _.forEach(columns, (c) => {
       w += c.width
     })
 

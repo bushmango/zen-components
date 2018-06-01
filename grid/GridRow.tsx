@@ -42,7 +42,7 @@ export class GridRow extends React.Component<
     let isHighlightedRow = dataRow === highlightedDataRow
 
     let style = gridStyle.row
-    let isEditing = editDataRow === dataRow
+    let isEditing = editDataRow === dataRow 
     if (isEditing) {
       style = gridStyle.rowSelected
     } else if (isHighlightedRow) {
