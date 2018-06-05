@@ -2,18 +2,18 @@ import { React, _ } from './gridImports'
 import { IGridColumn } from './IGridColumn'
 import { IGridStyle } from './IGridStyle'
 
-import Checkbox from 'material-ui/Checkbox'
+// import Checkbox from 'material-ui/Checkbox'
 
 export class GridCellEditCheck extends React.Component<
   {
     gridStyle: IGridStyle
     column: IGridColumn
     dataRow: any
-    onUpdateCell: (newValue: any, column: IGridColumn, dataRow: any) => void
+    onUpdateCell: (newValue: any, column: IGridColumn, dataRow: any) => void,
   },
   {}
 > {
-  _onChange = event => {
+  _onChange = (event) => {
     let newValue = event.target.checked
     console.log('change to ', newValue)
     this.props.onUpdateCell(newValue, this.props.column, this.props.dataRow)
@@ -32,12 +32,12 @@ export class GridCellEditCheck extends React.Component<
       <div style={gridStyle.cellEdit} title={'' + item}>
         <div style={column.cellStyle}>
           <div style={{margin: '-10px -5px'}}>
-            <Checkbox
+            {/* <Checkbox
               checked={item}
               onChange={this._onChange}
               value={column.header.dataItem}
-              color="primary"
-            />
+              color='primary'
+            /> */}
           </div>
         </div>
       </div>
