@@ -3,15 +3,15 @@ import { IGridStyle } from './IGridStyle'
 import { IGridColumn } from './IGridColumn'
 import { defaultColumnWidth, defaultColumnHeight } from './gridDefaults'
 
-import DeleteForever from 'material-ui-icons/DeleteForever'
-import Delete from 'material-ui-icons/Delete'
-import Add from 'material-ui-icons/Add'
-import ContentCopy from 'material-ui-icons/ContentCopy'
-import Edit from 'material-ui-icons/Edit'
-import IconButton from 'material-ui/IconButton'
+// import DeleteForever from 'material-ui-icons/DeleteForever'
+// import Delete from 'material-ui-icons/Delete'
+// import Add from 'material-ui-icons/Add'
+// import ContentCopy from 'material-ui-icons/ContentCopy'
+// import Edit from 'material-ui-icons/Edit'
+// import IconButton from 'material-ui/IconButton'
 
-import Check from 'material-ui-icons/Check'
-import CheckCircle from 'material-ui-icons/CheckCircle'
+// import Check from 'material-ui-icons/Check'
+// import CheckCircle from 'material-ui-icons/CheckCircle'
 
 export class GridPowerIcon extends React.Component<
   {
@@ -21,12 +21,13 @@ export class GridPowerIcon extends React.Component<
   > {
   render() {
     return (
-      <IconButton
-        style={{ margin: '-18px -10px 0px -10px' }}
-        onClick={this.props.onClick}
-      >
-        {this.props.children}
-      </IconButton>
+      null
+      // <IconButton
+      //   style={{ margin: '-18px -10px 0px -10px' }}
+      //   onClick={this.props.onClick}
+      // >
+      //   {this.props.children}
+      // </IconButton>
     )
   }
 }
@@ -48,7 +49,7 @@ export class GridPowerCellEdit extends React.Component<
       <div style={column.cellStyle}>
         <div style={gridStyle.cellIcons}>
           <GridPowerIcon>
-            <CheckCircle />
+            {/* <CheckCircle /> */}
           </GridPowerIcon>
         </div>
       </div>
@@ -91,7 +92,7 @@ export class GridPowerCell extends React.Component<
         <div style={column.cellStyle}>
           <div style={gridStyle.cellIcons}>
             <GridPowerIcon onClick={this.onAddRow}>
-              <Add />
+              {/* <Add /> */}
             </GridPowerIcon>
           </div>
         </div>
@@ -114,7 +115,7 @@ export class GridPowerCell extends React.Component<
             <ContentCopy />
           </GridPowerIcon> */}
           <GridPowerIcon onClick={this.onDeleteRow}>
-            <Delete />
+            {/* <Delete /> */}
           </GridPowerIcon>
         </div>
       </div>

@@ -1,0 +1,31 @@
+{
+  "name": "zen-components",
+  "version": "1.0.0",
+  "description": "zen-components",
+  "main": "index.js",
+  "directories": {
+    "example": "example",
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bushmango/zen-components.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/bushmango/zen-components/issues"
+  },
+  "homepage": "https://github.com/bushmango/zen-components#readme",
+  "dependencies": {
+    "@material-ui/core": "^1.2.0",
+    "@material-ui/icons": "^1.1.0",
+    "lodash": "^4.17.10",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "tslib": "^1.9.2"
+  }
+}
