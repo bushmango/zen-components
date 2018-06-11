@@ -2,12 +2,16 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 let globalWidth = 0
+let globalHeight = 0
 export function getGlobalWidth() {
   return globalWidth
 }
+export function getGlobalHeight() {
+  return globalHeight
+}
 
 export class BrowserSize extends React.Component<{
-  onResize?: (newWidth: number) => any,
+  onResize?: (newWidth: number, newHeight: number) => any,
 }> {
   state = {
     width: 800,
@@ -19,11 +23,12 @@ export class BrowserSize extends React.Component<{
   }, 200)
   _onWindowResize() {
     let width = window.innerWidth
+    let height = window.innerHeight
     globalWidth = width
     this.setState({ width, isMobile: width < 480 })
 
     if (this.props.onResize) {
-      this.props.onResize(width)
+      this.props.onResize(width, height)
     }
   }
 
@@ -37,6 +42,9 @@ export class BrowserSize extends React.Component<{
   }
 
   render() {
-    return this.props.children
+    if (this.props.children) {
+      return this.props.children
+    }
+    return null
   }
 }
