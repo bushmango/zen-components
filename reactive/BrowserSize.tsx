@@ -25,6 +25,7 @@ export class BrowserSize extends React.Component<{
     let width = window.innerWidth
     let height = window.innerHeight
     globalWidth = width
+    globalHeight = height
     this.setState({ width, isMobile: width < 480 })
 
     if (this.props.onResize) {
