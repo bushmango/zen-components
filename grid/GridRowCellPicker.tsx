@@ -25,7 +25,7 @@ export class GridRowCellPicker extends React.Component<
     selectedRows: any[],
   },
   {}
-> {
+  > {
   render() {
     let {
       column,
@@ -37,6 +37,10 @@ export class GridRowCellPicker extends React.Component<
       selectedRows,
       onSelectRow,
     } = this.props
+
+    if (column.header.canEdit === false) {
+      isEditing = false
+    }
 
     // if (column.header.power) {
     //   return (

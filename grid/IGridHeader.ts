@@ -11,4 +11,5 @@ export interface IGridHeader {
   editor?: 'check'
   tag?: any
   renderer?: (row, column, item) => any,
+  canEdit?: boolean,
 }
