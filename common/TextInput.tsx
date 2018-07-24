@@ -6,6 +6,7 @@ let aggressivelySuppressTextFlash = true
 
 export class TextInput extends React.Component<{
   text: string
+  label?: string
   tag?: any
   onUpdate: (newValue: any, tag: any) => void,
 }> {
@@ -39,17 +40,17 @@ export class TextInput extends React.Component<{
     if (aggressivelySuppressTextFlash) {
       //let showEdit = this.getShowEdit()
       //if (showEdit) {
-      console.log(
-        'new props',
-        this.props.text,
-        this.state.editStartValue,
-        this.props.text === this.state.editStartValue,
-      )
+      // console.log(
+      //   'new props',
+      //   this.props.text,
+      //   this.state.editStartValue,
+      //   this.props.text === this.state.editStartValue,
+      // )
       setTimeout(() => {
-        console.log('1')
+        // console.log('1')
         this.setState((prevState: any) => {
           if (!prevState.isEditing) {
-            console.log('2')
+            // console.log('2')
             return {
               editValue: this.props.text || '',
               editStartValue: this.props.text || '',
@@ -101,7 +102,8 @@ export class TextInput extends React.Component<{
     return (
       this.state.isEditing ||
       (aggressivelySuppressTextFlash &&
-        this.state.editStartValue === this.props.text && this.state.editStartValue !== this.state.editValue)
+        this.state.editStartValue === this.props.text &&
+        this.state.editStartValue !== this.state.editValue)
     )
   }
 
@@ -110,8 +112,11 @@ export class TextInput extends React.Component<{
 
     return (
       <span>
+        {this.props.label && <div>{this.props.label}</div>}
+
         <input
           type='text'
+          // label={this.props.label}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onChange={this.onChange}
