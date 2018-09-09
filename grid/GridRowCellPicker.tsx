@@ -21,8 +21,12 @@ export class GridRowCellPicker extends React.Component<
     highlightedColumn: IGridColumn
     onClickCell: (ev, column: IGridColumn, dataRow: any) => void
     onUpdateCell: (newValue: any, column: IGridColumn, dataRow: any) => void
-    onSelectRow?: (dataRow: any, isSelected: boolean, mode: 'single' | 'multiple') => void
-    selectedRows: any[],
+    onSelectRow?: (
+      dataRow: any,
+      isSelected: boolean,
+      mode: 'single' | 'multiple'
+    ) => void
+    selectedRows: any[]
   },
   {}
 > {
@@ -89,6 +93,18 @@ export class GridRowCellPicker extends React.Component<
             column={column}
             dataRow={dataRow}
             onUpdateCell={this.props.onUpdateCell}
+          />
+        )
+      }
+
+      if (column.header.renderer) {
+        return (
+          <GridCell
+            gridStyle={gridStyle}
+            column={column}
+            dataRow={dataRow}
+            onClickCell={this.props.onClickCell}
+            isHighlighted={isHighlightedRow && column === highlightedColumn}
           />
         )
       }
