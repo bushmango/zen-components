@@ -8,7 +8,8 @@ export class TextInput extends React.Component<{
   text: string
   label?: string
   tag?: any
-  onUpdate: (newValue: any, tag: any) => void,
+  onUpdate: (newValue: any, tag: any) => void
+  width?: string
 }> {
   state = {
     isEditing: false,
@@ -115,13 +116,13 @@ export class TextInput extends React.Component<{
         {this.props.label && <div>{this.props.label}</div>}
 
         <input
-          type='text'
+          type="text"
           // label={this.props.label}
           onFocus={this.onFocus}
           onBlur={this.onBlur}
           onChange={this.onChange}
-          style={{}}
           value={showEdit ? this.state.editValue || '' : this.props.text || ''}
+          style={{ maxWidth: this.props.width }}
         />
         {/* <span>{this.state.isEditing ? 'E' : showEdit ? 'e' : '-'}</span> */}
       </span>
