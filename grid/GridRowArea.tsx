@@ -15,24 +15,36 @@ export class GridRowArea extends React.Component<
     highlightedColumn: IGridColumn
     editDataRow: any
     highlightedDataRow: any
+    onClickRow: (ev, dataRow: any) => void
     onClickCell: (ev, column: IGridColumn, dataRow: any) => void
     onUpdateCell: (newValue: any, column: IGridColumn, dataRow: any) => void
     onDeleteRow: (dataRow: any) => void
     onEditRow: (dataRow: any) => void
     onCloneRow: (dataRow: any) => void
-    onAddRow: (dataRow: any) => void,
-    selectedRows: any[],
-    onSelectRow?: (dataRow: any, isSelected: boolean, mode: 'single' | 'multiple') => void
+    onAddRow: (dataRow: any) => void
+    selectedRows: any[]
+    onSelectRow?: (
+      dataRow: any,
+      isSelected: boolean,
+      mode: 'single' | 'multiple'
+    ) => void
   },
   any
-  > {
+> {
   state = {
     editColumn: null,
     editDataRow: null,
   }
 
   render() {
-    let { data, newItem, columns, gridStyle, selectedRows, onSelectRow } = this.props
+    let {
+      data,
+      newItem,
+      columns,
+      gridStyle,
+      selectedRows,
+      onSelectRow,
+    } = this.props
     let {
       editColumn,
       editDataRow,
@@ -47,6 +59,7 @@ export class GridRowArea extends React.Component<
             key={cIdx}
             columns={columns}
             dataRow={c}
+            onClickRow={this.props.onClickRow}
             onClickCell={this.props.onClickCell}
             editColumn={editColumn}
             editDataRow={editDataRow}
@@ -64,7 +77,7 @@ export class GridRowArea extends React.Component<
         {newItem && (
           <GridRow
             gridStyle={gridStyle}
-            key='new-item'
+            key="new-item"
             isNewRow={true}
             columns={columns}
             dataRow={newItem}
@@ -82,7 +95,6 @@ export class GridRowArea extends React.Component<
             onSelectRow={onSelectRow}
           />
         )}
-
       </div>
     )
   }

@@ -14,6 +14,7 @@ export class GridRow extends React.Component<
     editDataRow: any
     highlightedDataRow: any
     highlightedColumn: IGridColumn
+    onClickRow?: (ev, dataRow: any) => void
     onClickCell: (ev, column: IGridColumn, dataRow: any) => void
     onUpdateCell: (newValue: any, column: IGridColumn, dataRow: any) => void
 
@@ -21,11 +22,21 @@ export class GridRow extends React.Component<
     onEditRow: (dataRow: any) => void
     onCloneRow: (dataRow: any) => void
     onAddRow: (dataRow: any) => void
-    selectedRows: any[],
-    onSelectRow?: (dataRow: any, isSelected: boolean, mode: 'single' | 'multiple') => void
+    selectedRows: any[]
+    onSelectRow?: (
+      dataRow: any,
+      isSelected: boolean,
+      mode: 'single' | 'multiple'
+    ) => void
   },
   {}
 > {
+  onClick = (ev) => {
+    if (this.props.onClickRow) {
+      this.props.onClickRow(ev, this.props.dataRow)
+    }
+  }
+
   render() {
     let {
       gridStyle,
@@ -42,7 +53,7 @@ export class GridRow extends React.Component<
     let isHighlightedRow = dataRow === highlightedDataRow
 
     let style = gridStyle.row
-    let isEditing = editDataRow === dataRow 
+    let isEditing = editDataRow === dataRow
     if (isEditing) {
       style = gridStyle.rowSelected
     } else if (isHighlightedRow) {
@@ -50,7 +61,7 @@ export class GridRow extends React.Component<
     }
 
     return (
-      <div style={style}>
+      <div style={style} onMouseDown={this.onClick}>
         {_.map(columns, (c, cIdx) => (
           <GridRowCellPicker
             key={cIdx}

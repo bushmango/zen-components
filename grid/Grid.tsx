@@ -23,11 +23,15 @@ export class Grid extends React.Component<
     newItem?: any
     onUpdateCell?: (newValue: any, column: IGridColumn, dataRow: any) => void
     selectedRows?: any[]
-    onSelectRow?: (dataRow: any, isSelected: boolean, mode: 'single' | 'multiple') => void
+    onSelectRow?: (
+      dataRow: any,
+      isSelected: boolean,
+      mode: 'single' | 'multiple'
+    ) => void
     onDeleteRow?: (dataRow: any) => void
     onEditRow?: (dataRow: any) => void
     onCloneRow?: (dataRow: any) => void
-    onAddRow?: (dataRow: any) => void,
+    onAddRow?: (dataRow: any) => void
   },
   {}
 > {
@@ -54,12 +58,18 @@ export class Grid extends React.Component<
   }
 
   componentWillMount() {
-    let columns = gridLayout.layoutGridColumns(this.props.gridStyle, this.props.headers)
+    let columns = gridLayout.layoutGridColumns(
+      this.props.gridStyle,
+      this.props.headers
+    )
     this.setState({ columns })
   }
   componentWillReceiveProps(newProps) {
-    let columns = gridLayout.layoutGridColumns(newProps.gridStyle, newProps.headers)
-    console.log('update grid')
+    let columns = gridLayout.layoutGridColumns(
+      newProps.gridStyle,
+      newProps.headers
+    )
+    // console.log('update grid')
     this.setState({ columns })
   }
 
@@ -68,13 +78,24 @@ export class Grid extends React.Component<
       editColumn: column,
       editDataRow: dataRow,
     })
-    if (this.props.onSelectRow){
+    if (this.props.onSelectRow) {
       // console.log(ev)
       // console.log('shift?', ev.shiftKey)
       // console.log('ctrl?', ev.ctrlKey )
 
-      let mode: any = (ev.shiftKey || ev.ctrlKey) ? 'multiple' : 'single'
+      let mode: any = ev.shiftKey || ev.ctrlKey ? 'multiple' : 'single'
 
+      this.props.onSelectRow(dataRow, true, mode)
+    }
+  }
+
+  onClickRow = (ev, dataRow) => {
+    this.setState({
+      editColumn: null,
+      editDataRow: dataRow,
+    })
+    if (this.props.onSelectRow) {
+      let mode: any = ev.shiftKey || ev.ctrlKey ? 'multiple' : 'single'
       this.props.onSelectRow(dataRow, true, mode)
     }
   }
@@ -96,7 +117,7 @@ export class Grid extends React.Component<
       let columnHeight = defaultColumnHeight + 1
       // console.log(this._ref_headers.clientHeight, this._ref_headers.offsetHeight)
       let selectedRow = Math.floor(
-        (y - this._ref_headers.clientHeight - 2) / columnHeight,
+        (y - this._ref_headers.clientHeight - 2) / columnHeight
       )
       let { data } = this.props
       if (data && data.length > selectedRow && selectedRow >= 0) {
@@ -127,7 +148,14 @@ export class Grid extends React.Component<
   }
 
   render() {
-    let { headers, data, newItem, gridStyle, selectedRows, onSelectRow } = this.props
+    let {
+      headers,
+      data,
+      newItem,
+      gridStyle,
+      selectedRows,
+      onSelectRow,
+    } = this.props
 
     let {
       columns,
@@ -173,6 +201,7 @@ export class Grid extends React.Component<
             onEditRow={this.props.onEditRow}
             onCloneRow={this.props.onCloneRow}
             onAddRow={this.props.onAddRow}
+            onClickRow={this.onClickRow}
             onClickCell={this.onClickCell}
             editColumn={editColumn}
             editDataRow={editDataRow}
