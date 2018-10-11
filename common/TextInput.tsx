@@ -17,7 +17,12 @@ export class TextInput extends React.Component<{
     editStartValue: '',
   }
 
+  _isMounted = false
+  componentWillMount() {
+    this._isMounted = true
+  }
   componentWillUnmount() {
+    this._isMounted = false
     this._tryCommitChange()
   }
   onFocus = () => {
@@ -30,11 +35,13 @@ export class TextInput extends React.Component<{
   _startEditing = () => {
     // Start editing
     // console.log('start editing')
-    this.setState({
-      editValue: this.props.text || '',
-      editStartValue: this.props.text || '',
-      isEditing: true,
-    })
+    if (this._isMounted) {
+      this.setState({
+        editValue: this.props.text || '',
+        editStartValue: this.props.text || '',
+        isEditing: true,
+      })
+    }
   }
 
   componentWillReceiveProps(newProps) {
@@ -49,16 +56,18 @@ export class TextInput extends React.Component<{
       // )
       setTimeout(() => {
         // console.log('1')
-        this.setState((prevState: any) => {
-          if (!prevState.isEditing) {
-            // console.log('2')
-            return {
-              editValue: this.props.text || '',
-              editStartValue: this.props.text || '',
+        if (this._isMounted) {
+          this.setState((prevState: any) => {
+            if (!prevState.isEditing) {
+              // console.log('2')
+              return {
+                editValue: this.props.text || '',
+                editStartValue: this.props.text || '',
+              }
             }
-          }
-          return {}
-        })
+            return {}
+          })
+        }
       }, 100)
       //}
     }
@@ -87,7 +96,9 @@ export class TextInput extends React.Component<{
         //   }
         // })
       }
-      this.setState({ isEditing: false })
+      if (this._isMounted) {
+        this.setState({ isEditing: false })
+      }
     }
   }
 
@@ -96,7 +107,9 @@ export class TextInput extends React.Component<{
     if (isVerbose) {
       console.log('change to ', newValue)
     }
-    this.setState({ editValue: newValue })
+    if (this._isMounted) {
+      this.setState({ editValue: newValue })
+    }
   }
 
   getShowEdit() {
