@@ -1,6 +1,9 @@
 // Advanced error handling
 import { createLogger } from './../logger'
 const logger = createLogger('unhandled-errors')
+
+import * as googleAnalytics from 'client/googleAnalytics'
+
 export function start(isProduction: boolean) {
   logger.x('Handling unhandled errors', 'Production?', isProduction)
   window.onerror = function unhandledErrorHandler(
@@ -16,6 +19,9 @@ export function start(isProduction: boolean) {
       if (el) {
         el.style.display = 'block'
       }
+    } else {
+      // Record errors
+      googleAnalytics.googleAnalyticsFatalError('' + message)
     }
     // return true
   }
