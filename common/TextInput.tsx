@@ -5,16 +5,22 @@ let isVerbose = false
 let aggressivelySuppressTextFlash = true
 
 export class TextInput extends React.Component<{
-  text: string
   label?: string
   tag?: any
   onUpdate: (newValue: any, tag: any) => void
+  text: string
   width?: string
+  autoUpdate?: boolean
 }> {
+  static DefaultState = {
+    autoUpdate: true,
+  }
+
   state = {
     isEditing: false,
     editValue: '',
     editStartValue: '',
+    lastUpdateText: '',
   }
 
   _isMounted = false
@@ -63,6 +69,7 @@ export class TextInput extends React.Component<{
               return {
                 editValue: this.props.text || '',
                 editStartValue: this.props.text || '',
+                lastUpdateText: this.props.text || '',
               }
             }
             return {}
@@ -73,12 +80,19 @@ export class TextInput extends React.Component<{
     }
   }
 
-  _tryCommitChange = () => {
-    // Stop editing and commit change
+  _debounceDelayCommitChange = _.debounce(() => {
+    this._tryUpdateChange()
+  }, 250)
+
+  _tryUpdateChange = () => {
     let newValue = this.state.editValue || ''
     if (this.state.isEditing) {
       // console.log('commit edit')
-      if (newValue !== this.props.text) {
+      if (
+        newValue !== this.props.text &&
+        newValue !== this.state.lastUpdateText
+      ) {
+        this.setState({ lastUpdateText: newValue })
         this.props.onUpdate(newValue, this.props.tag)
         // this.setState({ isEditing: false }, () => {
         //   if (aggressivelySuppressTextFlash) {
@@ -96,9 +110,14 @@ export class TextInput extends React.Component<{
         //   }
         // })
       }
-      if (this._isMounted) {
-        this.setState({ isEditing: false })
-      }
+    }
+  }
+
+  _tryCommitChange = () => {
+    // Stop editing and commit change
+    this._tryUpdateChange()
+    if (this._isMounted) {
+      this.setState({ isEditing: false })
     }
   }
 
@@ -109,6 +128,9 @@ export class TextInput extends React.Component<{
     }
     if (this._isMounted) {
       this.setState({ editValue: newValue })
+      if (this.props.autoUpdate) {
+        this._debounceDelayCommitChange()
+      }
     }
   }
 
