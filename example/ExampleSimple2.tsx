@@ -1,6 +1,6 @@
-import React from 'react'
+import * as React from 'react'
 
-const ExampleSimple2 = props => {
+const ExampleSimple2 = (props) => {
   let math = 1 + 1
   return <div>This is an example control {math}</div>
 }
