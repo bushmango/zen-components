@@ -2,6 +2,7 @@ import * as React from 'react'
 import * as _ from 'lodash'
 
 let isVerbose = false
+let isDebug = false
 let aggressivelySuppressTextFlash = true
 
 export class TextInput extends React.Component<{
@@ -12,7 +13,7 @@ export class TextInput extends React.Component<{
   width?: string
   autoUpdate?: boolean
 }> {
-  static DefaultState = {
+  static defaultProps = {
     autoUpdate: true,
   }
 
@@ -86,6 +87,11 @@ export class TextInput extends React.Component<{
 
   _tryUpdateChange = () => {
     let newValue = this.state.editValue || ''
+
+    if (isDebug) {
+      console.log('_tryUpdateChange', newValue)
+    }
+
     if (this.state.isEditing) {
       // console.log('commit edit')
       if (
@@ -123,12 +129,21 @@ export class TextInput extends React.Component<{
 
   onChange = (event) => {
     let newValue = event.target.value
-    if (isVerbose) {
-      console.log('change to ', newValue)
+
+    if (isVerbose || isDebug) {
+      console.log(
+        'change to ',
+        newValue,
+        '' + this._isMounted,
+        '' + this.props.autoUpdate
+      )
     }
     if (this._isMounted) {
       this.setState({ editValue: newValue })
       if (this.props.autoUpdate) {
+        if (isDebug) {
+          console.log('try to debounce commit')
+        }
         this._debounceDelayCommitChange()
       }
     }
