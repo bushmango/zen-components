@@ -83,7 +83,7 @@ export class TextInput extends React.Component<{
 
   _debounceDelayCommitChange = _.debounce(() => {
     this._tryUpdateChange()
-  }, 250)
+  }, 1500)
 
   _tryUpdateChange = () => {
     let newValue = this.state.editValue || ''
