@@ -57,7 +57,7 @@ export class Grid extends React.Component<
     this._ref_headers = r
   }
 
-  componentWillMount() {
+  componentDidMount() {
     let columns = gridLayout.layoutGridColumns(
       this.props.gridStyle,
       this.props.headers

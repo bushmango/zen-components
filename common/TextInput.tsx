@@ -25,7 +25,7 @@ export class TextInput extends React.Component<{
   }
 
   _isMounted = false
-  componentWillMount() {
+  componentDidMount() {
     this._isMounted = true
   }
   componentWillUnmount() {
